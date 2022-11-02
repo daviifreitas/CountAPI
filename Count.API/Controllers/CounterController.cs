@@ -10,36 +10,40 @@ namespace Count.API.Controllers
     {
 
         private readonly CountAPIDbContext _context;
-
         public CounterController(CountAPIDbContext context)
         {
             _context = context;
         }
 
         // iF any person is present in the arduino's range which will be sent 1 or 0 if this condition is false;
-        [Route("api/")]
+        [Route("SendPersonPresent/")]
         [HttpPost]
-        public IActionResult ReceivePersonPresence(int ifPersonPresent)
+        public async Task<IActionResult> ReceivePersonPresence(int ifPersonPresent)
         {
             if(ifPersonPresent == 1)
             {
                 CountModel countModelForAdd = new CountModel
                 {
-                    Id = new Random().Next(1000, 1000000),
                     Created_at = DateTime.Now
                 };
                 _context.CountModels.Add(countModelForAdd);
+                await _context.SaveChangesAsync();
 
                 return StatusCode(200);
             }
             return null; 
         }
 
-        public IActionResult SentAmountOfPerson()
+        [Route("AmountOfPerson")]
+        [HttpGet]
+        public async Task<IActionResult> SentAmountOfPerson()
         {
             int amount = _context.CountModels.Count();
 
-            return new JsonResult(amount);
+            return Json(new
+            {
+                amount = amount
+            });
         }
 
     }
