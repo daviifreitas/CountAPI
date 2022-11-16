@@ -10,7 +10,6 @@ namespace Count.API.Controllers
     {
 
         private readonly CountAPIDbContext _context;
-
         public CounterController(CountAPIDbContext context)
         {
             _context = context;
@@ -25,7 +24,6 @@ namespace Count.API.Controllers
             {
                 CountModel countModelForAdd = new CountModel
                 {
-                    Id = new Random().Next(1000, 1000000),
                     Created_at = DateTime.Now
                 };
                 _context.CountModels.Add(countModelForAdd);
@@ -40,7 +38,10 @@ namespace Count.API.Controllers
         {
             int amount = _context.CountModels.Count();
 
-            return new JsonResult(amount);
+            return Json(new
+            {
+                amount = amount
+            });
         }
 
     }
