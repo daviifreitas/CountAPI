@@ -17,11 +17,11 @@ namespace Count.API.Controllers
         }
 
         // iF any person is present in the arduino's range which will be sent 1 or 0 if this condition is false;
-        [Route("api/")]
+        [Route("api/{id}")]
         [HttpPost]
-        public IActionResult ReceivePersonPresence(int ifPersonPresent)
+        public IActionResult ReceivePersonPresence(int id)
         {
-            if(ifPersonPresent == 1)
+            if(id == 1)
             {
                 CountModel countModelForAdd = new CountModel
                 {
@@ -29,12 +29,13 @@ namespace Count.API.Controllers
                     Created_at = DateTime.Now
                 };
                 _context.CountModels.Add(countModelForAdd);
+                _context.SaveChanges();
 
                 return StatusCode(200);
             }
             return null; 
         }
-
+        [HttpGet("getValues/")]
         public IActionResult SentAmountOfPerson()
         {
             int amount = _context.CountModels.Count();
