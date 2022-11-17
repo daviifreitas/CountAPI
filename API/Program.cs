@@ -1,9 +1,5 @@
-using Count.API.Context;
+using API.Context;
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
-using MySqlConnector;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
-using MySqlConnection = MySql.Data.MySqlClient.MySqlConnection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +9,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<CountAPIDbContext>(options => options.UseSqlite("Data Source=EstudantesDB.db"));
-
+builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlite("Data Source=Contatos.db"));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
