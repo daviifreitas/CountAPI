@@ -13,11 +13,11 @@ namespace API.Controllers
             _context = context;
         }
 
-        [Route("AddData")]
         [HttpGet]
+        [Route("Register/SendData")]
         public IActionResult SendData()
         {
-            for (int i =0;i < 9; i++)
+            for (int i = 0 ;i < 10; i++)
             {
                 Register register = new Register() { Created_at = DateTime.Now };
                 _context.Registers.Add(register);
@@ -28,7 +28,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Route("getData")]
+        [Route("Register/GetData")]
         public IActionResult GetData()
         {
             int amountOfData = _context.Registers.Count();
